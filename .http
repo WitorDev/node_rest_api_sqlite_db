@@ -1,0 +1,49 @@
+### 🔐 Register user
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  "username": "witor",
+  "password": "123"
+}
+
+###
+
+### 🔑 Login
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "witor",
+  "password": "123"
+}
+
+###
+
+# ⚠️ Copy the token from login and paste below
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ3aXRvciIsImlhdCI6MTc3NjExOTc5OSwiZXhwIjoxNzc2MTIzMzk5fQ.gnsOKTq-7auBAgf_tSciiG-OpsoqT59g9e2oAZys6Rw
+
+###
+
+### 🎮 Add game
+POST http://localhost:3000/games
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Elden Ring"
+}
+
+###
+
+### 📋 Get all games
+GET http://localhost:3000/games
+Authorization: Bearer {{token}}
+
+###
+
+### ❌ Delete game (change ID)
+DELETE http://localhost:3000/games/1
+Authorization: Bearer {{token}}
+
+###
