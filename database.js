@@ -1,31 +1,26 @@
-const sqlite3 = require("sqlite3").verbose();
+const Database = require("better-sqlite3");
 
-const db = new sqlite3.Database("./database.db", (err) => {
-  if (err) {
-    console.error("Database error:", err.message);
-  } else {
-    console.log("Connected to SQLite database.");
-  }
-});
+const db = new Database("database.db");
 
-// Create tables
-db.serialize(() => {
-  db.run(`
-		CREATE TABLE IF NOT EXISTS users (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			username TEXT UNIQUE,
-			password TEXT
-		)
-	`);
+db.prepare(
+  `
+	CREATE TABLE IF NOT EXISTS users (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		username TEXT UNIQUE,
+		password TEXT
+	)
+`,
+).run();
 
-  db.run(`
-		CREATE TABLE IF NOT EXISTS games (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			name TEXT,
-			user_id INTEGER,
-			FOREIGN KEY(user_id) REFERENCES users(id)
-		)
-	`);
-});
+db.prepare(
+  `
+	CREATE TABLE IF NOT EXISTS games (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT,
+		user_id INTEGER,
+		FOREIGN KEY (user_id) REFERENCES users(id)
+	)
+`,
+).run();
 
 module.exports = db;
